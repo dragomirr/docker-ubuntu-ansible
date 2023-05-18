@@ -1,5 +1,5 @@
-FROM ubuntu:18.04
-LABEL maintainer="Jeff Geerling"
+ARG UBUNTU_VERSION=22.04
+FROM ubuntu:${UBUNTU_VERSION}
 
 ARG DEBIAN_FRONTEND=noninteractive
 

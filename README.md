@@ -1,32 +1,27 @@
-# Ubuntu 18.04 LTS (Bionic) Ansible Test Image
+# Ubuntu Ansible Test Images
 
-[![CI](https://github.com/geerlingguy/docker-ubuntu1804-ansible/workflows/Build/badge.svg?branch=master&event=push)](https://github.com/geerlingguy/docker-ubuntu1804-ansible/actions?query=workflow%3ABuild) [![Docker pulls](https://img.shields.io/docker/pulls/geerlingguy/docker-ubuntu1804-ansible)](https://hub.docker.com/r/geerlingguy/docker-ubuntu1804-ansible/)
-
-Ubuntu 18.04 LTS (Bionic) Docker container for Ansible playbook and role testing.
+Ubuntu container images for Ansible playbook and role testing.
 
 ## Tags
 
-  - `latest`: Latest stable version of Ansible.
-  - `python2`: Deprecated.
-  - `testing`: Deprecated.
-
-The latest tag is a lightweight image for basic validation of Ansible playbooks.
+  - `18.04`, `20.04`, `22.04` -- tags resemble ubuntu version
+  - `latest` -- latest ubuntu lts release
 
 ## How to Build
 
-This image is built on Docker Hub automatically any time the upstream OS container is rebuilt, and any time a commit is made or merged to the `master` branch. But if you need to build the image on your own locally, do the following:
+This image is pushed to Docker Hub, but if you need to build the image on your own locally, do the following:
 
   1. [Install Docker](https://docs.docker.com/install/).
-  2. `cd` into this directory.
-  3. Run `docker build -t ubuntu1804-ansible .`
+  2. Run `docker build -t docker-ubuntu-ansible:22.04 .` -- to create image using ubuntu 22.04 which is default.
+  3. To create image with different ubuntu version run `docker build -t docker-ubuntu-ansible:20.04 . --build-arg UBUNTU_VERSION=20.04`
 
 > Note: Switch between `master` and `testing` depending on whether you want the extra testing tools present in the resulting image.
 
 ## How to Use
 
   1. [Install Docker](https://docs.docker.com/engine/installation/).
-  2. Pull this image from Docker Hub: `docker pull geerlingguy/docker-ubuntu1804-ansible:latest` (or use the image you built earlier, e.g. `ubuntu1804-ansible:latest`).
-  3. Run a container from the image: `docker run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host geerlingguy/docker-ubuntu1804-ansible:latest` (to test my Ansible roles, I add in a volume mounted from the current working directory with ``--volume=`pwd`:/etc/ansible/roles/role_under_test:ro``).
+  2. Pull this image from Docker Hub: `docker pull dockemir/docker-ubuntu-ansible:latest` (or use the image you built earlier, e.g. `ubuntu-ansible:22.04`).
+  3. Run a container from the image: `docker run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw --cgroupns=host dockemir/docker-ubuntu-ansible:latest` (to test my Ansible roles, I add in a volume mounted from the current working directory with ``--volume=`pwd`:/etc/ansible/roles/role_under_test:ro``).
   4. Use Ansible inside the container:
     a. `docker exec --tty [container_id] env TERM=xterm ansible --version`
     b. `docker exec --tty [container_id] env TERM=xterm ansible-playbook /path/to/ansible/playbook.yml --syntax-check`
@@ -40,3 +35,5 @@ I use Docker to test my Ansible roles and playbooks on multiple OSes using CI to
 ## Author
 
 Created in 2018 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+
+Updated by `dragomirr` in 2023.
